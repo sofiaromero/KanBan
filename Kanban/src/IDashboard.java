@@ -6,3 +6,4 @@ public interface IDashboard {
 	void clear();
 
 }
+//
