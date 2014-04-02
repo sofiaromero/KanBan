@@ -16,18 +16,29 @@ public class Task {
 		System.out.println("starting Task() ctor...");
 	}
 
-	public Task(String title) {
-		this(title, State.BACKLOG);
-		System.out.println("starting Task(String) ctor...");
+	public Task (String title) {
+		this(title, State.BACKLOG, (short) 1);
+		System.out.println("staring Task (String) ctor...");
+		
+	}
+	
+	public Task(String title, short priority) {
+		this(title, State.BACKLOG, priority);
+		System.out.println("starting Task(String, Priority) ctor...");
 	}
 
-	public Task(String title, State state) {
-		super();
+	public Task(String title, State state){
+		this(title, state, (short) 1);
 		System.out.println("starting Task(String, State) ctor...");
+	}
+	
+	public Task(String title, State state, short priority) {
+		super();
+		System.out.println("starting Task(String, State, Priority) ctor...");
 
 		this.title = title;
 		createDate = new Date();
-		priority = 1;
+		this.priority = priority;
 		this.state = state;
 	}
 
