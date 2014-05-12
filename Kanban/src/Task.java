@@ -2,6 +2,7 @@ import java.util.Date;
 
 public class Task {
 //
+	private final Object addSave = new Object();
 	private String title;
 	private String description;
 	private State state;
@@ -121,12 +122,18 @@ public class Task {
 		return false;
 	}
 
-	public boolean save(){
-		try{
-			Thread.sleep(1*1000);
-		} catch (InterruptedException e){
-			e.printStackTrace();}
+	public synchronized boolean remove(){
 		return true;
+	}
+	
+	public boolean save(){
+		synchronized (addSave){
+			try{
+				Thread.sleep(1*1000);
+			} catch (InterruptedException e){
+				e.printStackTrace();}
+			return true;
+		}
 	}
 
 
