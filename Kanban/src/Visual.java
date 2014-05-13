@@ -78,7 +78,7 @@ public class Visual extends JFrame {
 		contentPane.add(lblTitle, gbc_lblTitle);
 
 		textFieldTitle = new JTextField();
-		textFieldTitle.setText("...");
+		textFieldTitle.setText("");
 		GridBagConstraints gbc_textFieldTitle = new GridBagConstraints();
 		gbc_textFieldTitle.gridwidth = 4;
 		gbc_textFieldTitle.insets = new Insets(0, 0, 5, 5);
@@ -97,7 +97,7 @@ public class Visual extends JFrame {
 		contentPane.add(lblCategory, gbc_lblCategory);
 
 		textFieldCategory = new JTextField();
-		textFieldCategory.setText("...");
+		textFieldCategory.setText("");
 		GridBagConstraints gbc_textFieldCategory = new GridBagConstraints();
 		gbc_textFieldCategory.gridwidth = 4;
 		gbc_textFieldCategory.insets = new Insets(0, 0, 5, 5);
@@ -116,7 +116,7 @@ public class Visual extends JFrame {
 		contentPane.add(lblDescription, gbc_lblDescription);
 
 		textFieldDescription = new JTextField();
-		textFieldDescription.setText("...");
+		textFieldDescription.setText("");
 		GridBagConstraints gbc_textFieldDescription = new GridBagConstraints();
 		gbc_textFieldDescription.gridwidth = 4;
 		gbc_textFieldDescription.insets = new Insets(0, 0, 5, 5);
@@ -171,7 +171,7 @@ public class Visual extends JFrame {
 		contentPane.add(lblOwner, gbc_lblOwner);
 
 		textFieldOwner = new JTextField();
-		textFieldOwner.setText("...");
+		textFieldOwner.setText("");
 		GridBagConstraints gbc_textFieldOwner = new GridBagConstraints();
 		gbc_textFieldOwner.gridwidth = 4;
 		gbc_textFieldOwner.insets = new Insets(0, 0, 5, 5);
@@ -190,7 +190,7 @@ public class Visual extends JFrame {
 		contentPane.add(lblDueDate, gbc_lblDueDate);
 
 		textFieldDueDate = new JTextField();
-		textFieldDueDate.setText("...");
+		textFieldDueDate.setText("");
 		GridBagConstraints gbc_textFieldDueDate = new GridBagConstraints();
 		gbc_textFieldDueDate.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldDueDate.gridwidth = 4;
@@ -205,6 +205,26 @@ public class Visual extends JFrame {
 		btnAddToBackpack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Confirm");
+				String title = textFieldTitle.getText();
+				if("".equalsIgnoreCase(title.trim())){
+					JOptionPane.showMessageDialog(null,"Title is empty...");
+				}
+				String category = textFieldTitle.getText();
+				if("".equalsIgnoreCase(title.trim())){
+					JOptionPane.showMessageDialog(null,"Category is empty...");
+				}
+				String description = textFieldTitle.getText();
+				if("".equalsIgnoreCase(title.trim())){
+					JOptionPane.showMessageDialog(null,"Description is empty...");
+				}
+				String owner = textFieldTitle.getText();
+				if("".equalsIgnoreCase(title.trim())){
+					JOptionPane.showMessageDialog(null,"Owner is empty...");
+				}
+				String dueDate = textFieldTitle.getText();
+				if("".equalsIgnoreCase(title.trim())){
+					JOptionPane.showMessageDialog(null,"Due Date is empty...");
+				}
 			}
 		});
 		add(btnAddToBackpack,gbc_lblBackpack);
@@ -243,7 +263,8 @@ public class Visual extends JFrame {
 	private class ConfirmationAction implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "Confirm");
+			JOptionPane.showMessageDialog(null, "Deseas agregar los datos?");
+				
 		}
 	}
 	
@@ -268,7 +289,5 @@ public class Visual extends JFrame {
 			}
 		});
 	}
-	
-
-	
+	//	
 }
