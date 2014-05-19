@@ -24,6 +24,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 
 public class Visual extends JFrame {
@@ -209,22 +210,46 @@ public class Visual extends JFrame {
 				if("".equalsIgnoreCase(title.trim())){
 					JOptionPane.showMessageDialog(null,"Title is empty...");
 				}
-				String category = textFieldTitle.getText();
-				if("".equalsIgnoreCase(title.trim())){
-					JOptionPane.showMessageDialog(null,"Category is empty...");
-				}
-				String description = textFieldTitle.getText();
+				String description = textFieldDescription.getText();
 				if("".equalsIgnoreCase(title.trim())){
 					JOptionPane.showMessageDialog(null,"Description is empty...");
 				}
-				String owner = textFieldTitle.getText();
+				String estado = (String)comboBoxState.getSelectedItem();
+				State state = null;
+				if (estado.equals("TO DO")){
+					state=State.TO_DO;
+				}
+				else if (estado.equals("IN PROGRESS")){
+					state=State.IN_PROGRESS;
+				}
+				else if (estado.equals("DONE")){
+					state=State.DONE;
+				}
+				if("".equalsIgnoreCase(title.trim())){
+					JOptionPane.showMessageDialog(null,"State is empty...");
+				}
+				String category = textFieldCategory.getText();
+				if("".equalsIgnoreCase(title.trim())){
+					JOptionPane.showMessageDialog(null,"Category is empty...");
+				}
+				String priority = (String)comboBoxPriority.getSelectedItem();
+				if("".equalsIgnoreCase(title.trim())){
+					JOptionPane.showMessageDialog(null,"Priority is empty...");
+				}
+				String owner = textFieldOwner.getText();
 				if("".equalsIgnoreCase(title.trim())){
 					JOptionPane.showMessageDialog(null,"Owner is empty...");
 				}
-				String dueDate = textFieldTitle.getText();
+				String dueDate = textFieldDueDate.getText();
 				if("".equalsIgnoreCase(title.trim())){
 					JOptionPane.showMessageDialog(null,"Due Date is empty...");
 				}
+				
+				Task tarea = new Task (title, description, state, category, priority, owner, dueDate);
+				Program.dashboard.add(tarea);
+				JOptionPane.showMessageDialog(null, "New task added!");
+				
+				
 			}
 		});
 		add(btnAddToBackpack,gbc_lblBackpack);

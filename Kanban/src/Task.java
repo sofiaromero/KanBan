@@ -6,34 +6,44 @@ public class Task {
 	private String title;
 	private String description;
 	private State state;
-	private Category category;
-	private short priority;
+	private String category;
+	private String priority;
 	private String owner;
-	private Date dueDate;
+	private String dueDate;
 	private Date createDate;
 
+	public Task (String title, String description, State state, String category, String priority, String owner, String dueDate){
+		 this.title=title;
+		 this.description=description;
+		 this.state=state;
+		 this.category=category;
+		 this.priority=priority;
+		 this.owner=owner;
+		 this.dueDate=dueDate;
+	}
+	
 	public Task() {
 		this("");
 		System.out.println("starting Task() ctor...");
 	}
 
 	public Task (String title) {
-		this(title, State.BACKLOG, (short) 1);
+		this(title, State.BACKLOG, (String) "1");
 		System.out.println("staring Task (String) ctor...");
 
 	}
 
-	public Task(String title, short priority) {
+	public Task(String title, String priority) {
 		this(title, State.BACKLOG, priority);
 		System.out.println("starting Task(String, Priority) ctor...");
 	}
 
 	public Task(String title, State state){
-		this(title, state, (short) 1);
+		this(title, state, (String) "1");
 		System.out.println("starting Task(String, State) ctor...");
 	}
 
-	public Task(String title, State state, short priority) {
+	public Task(String title, State state, String priority) {
 		super();
 		System.out.println("starting Task(String, State, Priority) ctor...");
 
@@ -69,19 +79,19 @@ public class Task {
 		this.state = state;
 	}
 
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 
-	public short getPriority() {
+	public String getPriority() {
 		return priority;
 	}
 
-	public void setPriority(short priority) {
+	public void setPriority(String priority) {
 		this.priority = priority;
 	}
 
@@ -93,11 +103,11 @@ public class Task {
 		this.owner = owner;
 	}
 
-	public Date getDueDate() {
+	public String getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
 	}
 
