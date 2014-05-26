@@ -24,6 +24,8 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -46,7 +48,71 @@ public class Visual extends JFrame {
 	private JLabel lblBackpack;
 	private JButton btnAddToBackpack;
 	private JButton btnCancel;
-
+	
+	private class TaskAction implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			Object source = e.getSource();
+			if (source instanceof JButton){
+				if (btnAddToBackpack == source){
+					try{
+						verify();
+						if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null,"Do you want to add this task?", "Confirmation", JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE)){
+							if (save()){
+								JOptionPane.showMessageDialog(null,"Task added successfully!");
+								clean();
+							}
+						}
+					} catch (EmptyComponentException ex){
+						JOptionPane.showMessageDialog(null, ex.getMessage(), "Validation Error", JOptionPane.ERROR_MESSAGE);
+					} catch (Exception ex){
+						JOptionPane.showMessageDialog(null, ex.getMessage(), "Validation Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				
+			}
+		}
+	}
+	
+	private boolean save(){
+		Task task = new Task();
+  		task.setTitle(textFieldTitle.getText());
+  		task.setDescription(textFieldDescription.getText());
+  		//task.setState(comboBoxState.getItemAt(comboBoxState.getSelectedIndex()));
+  		task.setCategory((textFieldCategory.getText()));
+  		//task.setPriority(Short.parseShort(textFieldPriority.getText()));
+  		task.setOwner(textFieldOwner.getText());
+  		SimpleDateFormat formatter = new SimpleDateFormat(
+  				"EEE MMM d HH:mm:ss zzz yyyy");
+  		//task.setDueDate(formatter.parse(textFieldDueDate.getText()));
+		task.setDueDate(textFieldDueDate.getText());
+  		task.setCreateDate(new Date());
+  
+  		return Program.dashboard.add(task);
+  	}
+	
+	private void isEmpty(String message, JTextField text) throws EmptyComponentException{
+			if("".equals(text.getText().trim())){
+				throw new EmptyComponentException(message,text);
+			}
+	}
+	
+	private void verify() throws Exception{
+		isEmpty("Title is empty...", textFieldTitle);
+		isEmpty("Description is empty...", textFieldDescription);
+		isEmpty("Category is empty...",textFieldCategory);
+		isEmpty("Owner field is empty", textFieldOwner);
+		isEmpty("Due date field is empty", textFieldDueDate);
+	}
+	
+ 	private void clean() {
+  		textFieldTitle.setText("");
+  		textFieldDescription.setText("");
+  		textFieldCategory.setText("");
+  		textFieldOwner.setText("");
+  		textFieldDueDate.setText(new Date().toString());
+  	}
+	
+	
 	public Visual() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -203,55 +269,17 @@ public class Visual extends JFrame {
 		
 		// btnAddToBackpack
 		btnAddToBackpack = new JButton("Add to Backpack!");
-		btnAddToBackpack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Confirm");
-				String title = textFieldTitle.getText();
-				if("".equalsIgnoreCase(title.trim())){
-					JOptionPane.showMessageDialog(null,"Title is empty...");
-				}
-				String description = textFieldDescription.getText();
-				if("".equalsIgnoreCase(title.trim())){
-					JOptionPane.showMessageDialog(null,"Description is empty...");
-				}
-				String estado = (String)comboBoxState.getSelectedItem();
-				State state = null;
-				if (estado.equals("TO DO")){
-					state=State.TO_DO;
-				}
-				else if (estado.equals("IN PROGRESS")){
-					state=State.IN_PROGRESS;
-				}
-				else if (estado.equals("DONE")){
-					state=State.DONE;
-				}
-				if("".equalsIgnoreCase(title.trim())){
-					JOptionPane.showMessageDialog(null,"State is empty...");
-				}
-				String category = textFieldCategory.getText();
-				if("".equalsIgnoreCase(title.trim())){
-					JOptionPane.showMessageDialog(null,"Category is empty...");
-				}
-				String priority = (String)comboBoxPriority.getSelectedItem();
-				if("".equalsIgnoreCase(title.trim())){
-					JOptionPane.showMessageDialog(null,"Priority is empty...");
-				}
-				String owner = textFieldOwner.getText();
-				if("".equalsIgnoreCase(title.trim())){
-					JOptionPane.showMessageDialog(null,"Owner is empty...");
-				}
-				String dueDate = textFieldDueDate.getText();
-				if("".equalsIgnoreCase(title.trim())){
-					JOptionPane.showMessageDialog(null,"Due Date is empty...");
-				}
+		
+		/*	
+		btnAddToBackpack.addActionListener(new ActionListener()) {		
+		}*/
+			
+			
+
 				
-				Task tarea = new Task (title, description, state, category, priority, owner, dueDate);
-				Program.dashboard.add(tarea);
-				JOptionPane.showMessageDialog(null, "New task added!");
+
 				
-				
-			}
-		});
+								
 		add(btnAddToBackpack,gbc_lblBackpack);
 		btnAddToBackpack.setFont(new Font("Helvetica LT Std", Font.PLAIN, 16));
 		GridBagConstraints gbc_btnAddToBackpack = new GridBagConstraints();
@@ -281,8 +309,9 @@ public class Visual extends JFrame {
 	
 	//
 	private void addListener(){
-		btnAddToBackpack.addActionListener(new ConfirmationAction());
-		btnCancel.addActionListener(new CancelAction());
+		TaskAction ta = new TaskAction();
+		btnAddToBackpack.addActionListener(ta);
+		btnCancel.addActionListener(ta);
 	}
 	
 	private class ConfirmationAction implements ActionListener{
